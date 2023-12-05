@@ -16,7 +16,7 @@
 //     return await openDatabase(dbPath, version: 1, onCreate: (db, version) {
 //       //create all your tables here
 //       db.execute(
-//           "Create table notes ( noteID integer primary key autoincrement, title text desc text)");
+//           "Create table notes ( noteID integer primary key autoincrement, title text, desc text)");
 //     });
 //   }
 //

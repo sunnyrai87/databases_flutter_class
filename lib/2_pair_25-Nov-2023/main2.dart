@@ -44,7 +44,6 @@
 //   }
 //
 //   void getAllNotes() async{
-//
 //     data = await appDB.fetchNotes();
 //     setState(() {
 //
