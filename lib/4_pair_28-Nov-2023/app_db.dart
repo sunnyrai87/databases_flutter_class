@@ -47,7 +47,6 @@ class AppDataBase {
     List<NoteModel> arrNotes = [];
     var data = await db.query(NOTE_TABLE);
 
-
     for (Map<String, dynamic> eachNote in data) {
       var noteModel = NoteModel.fromMap(eachNote);
       arrNotes.add(noteModel);
@@ -55,8 +54,15 @@ class AppDataBase {
     return arrNotes;
   }
 
-  void deleteNotes() async{
+  void updateNote(NoteModel updatedNote) async {
+    var db = await getDB();
+    //db.update(NOTE_TABLE, updatedNote.toMap(),where: "$COLUMN_NOTE_ID = ${updatedNote.note_id}", whereArgs: null);
+    db.update(NOTE_TABLE, updatedNote.toMap(), where: "$COLUMN_NOTE_ID = ?",
+      whereArgs: ['${updatedNote.note_id}']);
+
+  }
+  void deleteNotes(int id) async{
     var db =await getDB();
-    db.delete(NOTE_TABLE, where: "");
+    db.delete(NOTE_TABLE, where: "$COLUMN_NOTE_ID= $id");
   }
 }

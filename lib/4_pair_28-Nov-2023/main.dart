@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (context, index) {
               var currData = data[index];
               return ListTile(
-                leading: Text("${currData.note_id}"),
+                leading: Text("${index+1}"),
                 title: Text(currData.note_title),
                 subtitle: Text(currData.note_desc),
                 trailing: SizedBox(
@@ -71,30 +71,40 @@ class _HomePageState extends State<HomePage> {
                       InkWell(
                           onTap: () {
                             //update the data
-                            callMyBottomSheet(isUpdate: true,
-                                title:currData.note_title,
-                                desc: currData.note_desc );
-
+                            callMyBottomSheet(
+                                isUpdate: true,
+                                noteId: currData.note_id,
+                                title: currData.note_title,
+                                desc: currData.note_desc);
                           },
                           child: Icon(Icons.edit, color: Colors.blue)),
                       InkWell(
                           onTap: () {
                             //delete the data
-                            showDialog(context: context, builder: (context){
-                              return AlertDialog(
-                                title: Text("delete"),
-                                content: Text("are you sure you want to delete"),
-                                actions: [
-                                  TextButton(onPressed: (){
-                                    //delete operations here
-
-                                  }, child: Text("yes")),
-                              TextButton(onPressed: (){}, child: Text("no"))
-                                ],
-
-                              );
-
-                            });
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text("delete"),
+                                    content:
+                                        Text("are you sure you want to delete"),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            //delete operations here
+                                            appDB.deleteNotes(currData.note_id);
+                                            getAllNotes();
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("yes")),
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("no"))
+                                    ],
+                                  );
+                                });
                           },
                           child: Icon(Icons.delete, color: Colors.red))
                     ],
@@ -109,14 +119,18 @@ class _HomePageState extends State<HomePage> {
             child: Icon(Icons.add)));
   }
 
-  void callMyBottomSheet({bool isUpdate = false, String title = "", String desc = ""  }) {
-  if(isUpdate){
-    titleController.text = title;
-    descController.text = desc;
-  } else {
-    titleController.text = "";
-    descController.text = "";
-  }
+  void callMyBottomSheet(
+      {bool isUpdate = false,
+      int noteId = 0,
+      String title = "",
+      String desc = ""}) {
+    if (isUpdate) {
+      titleController.text = title;
+      descController.text = desc;
+    } else {
+      titleController.text = "";
+      descController.text = "";
+    }
 
     showModalBottomSheet(
         context: context,
@@ -126,7 +140,7 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(isUpdate ? 'update note' :'add noted'),
+                  Text(isUpdate ? 'update note' : 'add noted'),
                   TextField(
                     controller: titleController,
                   ),
@@ -140,14 +154,22 @@ class _HomePageState extends State<HomePage> {
                           onPressed: () {
                             //add note here
                             if (titleController.text.isNotEmpty &&
-                                descController.text.isNotEmpty);
+                                descController.text.isNotEmpty) ;
                             if (isUpdate) {
-
+                              //update notes here
+                              appDB.updateNote(NoteModel(
+                                  note_id: noteId,
+                                  note_title: titleController.text.toString(),
+                                  note_desc: descController.text.toString()));
+                            } else {
+                              appDB.updateNote(NoteModel(
+                                  note_id: 0,
+                                  note_title: titleController.text.toString(),
+                                  note_desc: descController.text.toString()));
+                              getAllNotes();
+                              Navigator.pop(context);
                             }
-                            else {
-                            getAllNotes();
-                            Navigator.pop(context);
-                          }},
+                          },
                           child: Text(isUpdate ? 'update' : 'Add')),
                       TextButton(
                           onPressed: () {
