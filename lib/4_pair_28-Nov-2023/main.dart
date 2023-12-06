@@ -154,7 +154,14 @@ class _HomePageState extends State<HomePage> {
                           onPressed: () {
                             //add note here
                             if (titleController.text.isNotEmpty &&
-                                descController.text.isNotEmpty) ;
+                                descController.text.isNotEmpty) {
+                              appDB.addNote(NoteModel(note_id: 0,
+                                  note_title: titleController.text,
+                                  note_desc: descController.text));
+
+                              getAllNotes();
+                              Navigator.pop(context);
+                            }
                             if (isUpdate) {
                               //update notes here
                               appDB.updateNote(NoteModel(
@@ -170,6 +177,8 @@ class _HomePageState extends State<HomePage> {
                               Navigator.pop(context);
                             }
                           },
+
+
                           child: Text(isUpdate ? 'update' : 'Add')),
                       TextButton(
                           onPressed: () {
