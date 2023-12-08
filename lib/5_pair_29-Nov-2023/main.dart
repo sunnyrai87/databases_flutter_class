@@ -1,3 +1,4 @@
+// import 'package:databases_flutter_class/5_pair_29-Nov-2023/user_onboarding/sign_up_page.dart';
 // import 'package:flutter/material.dart';
 //
 // import 'app_db.dart';
@@ -19,7 +20,7 @@
 //         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
 //         useMaterial3: true,
 //       ),
-//       home: const HomePage(),
+//       home: SignUpPage(),
 //     );
 //   }
 // }
@@ -60,7 +61,7 @@
 //             itemBuilder: (context, index) {
 //               var currData = data[index];
 //               return ListTile(
-//                 leading: Text("${index+1}"),
+//                 leading: Text("${index + 1}"),
 //                 title: Text(currData.note_title),
 //                 subtitle: Text(currData.note_desc),
 //                 trailing: SizedBox(
@@ -151,23 +152,29 @@
 //                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 //                     children: [
 //                       TextButton(
-//                           onPressed: () {
-//                             //add note here
+//                           onPressed: () async {
 //                             if (titleController.text.isNotEmpty &&
-//                                 descController.text.isNotEmpty) ;
-//                             if (isUpdate) {
-//                               //update notes here
-//                               appDB.updateNote(NoteModel(
-//                                   note_id: noteId,
-//                                   note_title: titleController.text.toString(),
-//                                   note_desc: descController.text.toString()));
-//                             } else {
-//                               appDB.updateNote(NoteModel(
-//                                   note_id: 0,
-//                                   note_title: titleController.text.toString(),
-//                                   note_desc: descController.text.toString()));
-//                               getAllNotes();
-//                               Navigator.pop(context);
+//                                 descController.text.isNotEmpty) {
+//                               if (isUpdate) {
+//                                 //update notes here
+//                                 appDB.updateNote(NoteModel(
+//                                   user_id: 1,
+//                                     note_id: noteId,
+//                                     note_title: titleController.text.toString(),
+//                                     note_desc: descController.text.toString()));
+//                                 getAllNotes();
+//                                 Navigator.pop(context);
+//                               }
+//                               else {
+//                                 //update notes here
+//                                 await appDB.addNote(NoteModel(
+//                                     user_id: 1,
+//                                     note_id: 0,
+//                                     note_title: titleController.text.toString(),
+//                                     note_desc: descController.text.toString()));
+//                                 getAllNotes();
+//                                 Navigator.pop(context);
+//                               }
 //                             }
 //                           },
 //                           child: Text(isUpdate ? 'update' : 'Add')),

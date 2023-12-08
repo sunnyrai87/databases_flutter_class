@@ -1,3 +1,4 @@
+// import 'package:databases_flutter_class/5_pair_29-Nov-2023/user_Model.dart';
 // import 'package:path/path.dart';
 // import 'package:path_provider/path_provider.dart';
 // import 'package:sqflite/sqflite.dart';
@@ -10,7 +11,7 @@
 //   AppDataBase._();
 //   static final AppDataBase instance = AppDataBase._();
 //   Database? myDB;
-// // table
+//   // table
 //   static final String NOTE_TABLE = "notes";
 //   static final String USER_TABLE = "users";
 //
@@ -22,6 +23,7 @@
 //
 //   //columns
 //   //add uId here also
+//
 //   static final String COLUMN_NOTE_ID = "noteID";
 //   static final String COLUMN_NOTE_TITLE = "title";
 //   static final String COLUMN_NOTE_DESC = "desc";
@@ -32,12 +34,10 @@
 //
 //     return await openDatabase(dbPath, version: 1, onCreate: (db, version) {
 //       //create all your tables here
-//
 //       db.execute(
-//           "Create table $USER_TABLE ( $COLUMN_USER_ID integer primary key autoincrement, $COLUMN_USER_NAME text, $COLUMN_USER_EMAIL text,$COLUMN_USER_PASS text, )");
-//
+//           "Create table $USER_TABLE ( $COLUMN_USER_ID integer primary key autoincrement, $COLUMN_USER_NAME text, $COLUMN_USER_EMAIL text,$COLUMN_USER_PASS text )");
 //       db.execute(
-//           "Create table $NOTE_TABLE ( $COLUMN_NOTE_ID integer primary key autoincrement, $COLUMN_NOTE_TITLE text, $COLUMN_NOTE_DESC text )");
+//           "Create table $NOTE_TABLE ( $COLUMN_NOTE_ID integer primary key autoincrement, $COLUMN_USER_ID integar, $COLUMN_NOTE_TITLE text, $COLUMN_NOTE_DESC text )");
 //     });
 //   }
 //
@@ -50,7 +50,7 @@
 //     }
 //   }
 //
-//   void addNote(NoteModel newNote) async {
+//   Future<void> addNote(NoteModel newNote) async {
 //     var db = await getDB();
 //     db.insert(NOTE_TABLE, newNote.toMap());
 //   }
@@ -77,5 +77,38 @@
 //   void deleteNotes(int id) async {
 //     var db = await getDB();
 //     db.delete(NOTE_TABLE, where: "$COLUMN_NOTE_ID= $id");
+//   }
+//
+// //queries for user
+//   Future<bool> createAccount(UserModel newUser) async {
+//     var check = await checkIfUserAlreadyExists(newUser.user_email);
+//     if (!check) {
+//       //create user
+//       var db = await getDB();
+//       db.insert(USER_TABLE, newUser.toMAP());
+//       return true;
+//     } else {
+//       //do not create account
+//       return false;
+//     }
+//   }
+//
+//   Future<bool> checkIfUserAlreadyExists(String email) async {
+//     var db = await getDB();
+//     var data = await db.query(USER_TABLE,
+//         where: "$COLUMN_USER_EMAIL = ? ", whereArgs: [email]);
+//     return data.isNotEmpty;
+//     // if (data.isNotEmpty){
+//     //   return true;
+//     // } else { return false;}
+//   }
+//
+//   Future<bool> authenticateUser(String email, String pass) async {
+//     var db = await getDB();
+//     var data = await db.query(USER_TABLE,
+//         where: "$COLUMN_USER_EMAIL = ? and $COLUMN_USER_PASS= ?",
+//         whereArgs: [email, pass]);
+//
+//     return data.isNotEmpty;
 //   }
 // }
