@@ -1,7 +1,8 @@
 import 'package:databases_flutter_class/6_pair_30-Nov-2023/app_db.dart';
 import 'package:databases_flutter_class/6_pair_30-Nov-2023/main.dart';
 import 'package:databases_flutter_class/6_pair_30-Nov-2023/user_onboarding/sign_up_page.dart';
-import 'package:databases_flutter_class/Provider/Consumer/9th_pair_05-Dec-2023/user_onboarding/sign_up_page.dart';
+import 'package:databases_flutter_class/7_pair_Provider/cubit/with%20database/13th_pair_09-Dec-2023/user_onboarding/sign_up_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

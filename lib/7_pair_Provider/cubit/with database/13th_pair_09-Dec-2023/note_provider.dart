@@ -1,6 +1,8 @@
-import 'package:databases_flutter_class/Provider/Consumer/9th_pair_05-Dec-2023/app_db.dart';
-import 'package:databases_flutter_class/Provider/Consumer/9th_pair_05-Dec-2023/model/note_model.dart';
+
 import 'package:flutter/widgets.dart';
+
+import 'app_db.dart';
+import 'model/note_model.dart';
 
 class NoteProvider extends ChangeNotifier {
   AppDataBase db;
