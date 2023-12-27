@@ -1,4 +1,4 @@
-class CounterState{
-  int count;
-  CounterState({required this.count});
-}
+// class CounterState{
+//   int count;
+//   CounterState({required this.count});
+// }
